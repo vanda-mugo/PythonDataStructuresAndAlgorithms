@@ -1,0 +1,262 @@
+Enumeration
+3 min
+
+An enumeration is defined as the number of ways to select from, or arrange, a set of n objects. Before we can begin studying this process, we have to explore some fundamental concepts.
+
+Let’s say you have two different sets of objects (here, by “set” we mean the mathematical definition of a set), and you want to figure out how many different ways 
+you can pick one object from either set. Set A has ten objects in it and set B has five objects in it. You can either pick one object from set A or one object from 
+set B. The total number of possible objects that you can have is simply the sum of the number of objects in set A and set B, so the answer is 15. This is known as 
+the addition principle.
+
+Let’s say, however, you wish to pick an object from set A and set B. For every option from set A, you have an option from set B. This means the number of ways of 
+selecting one object from set A and one object from set B is the product of the number of objects in two sets. In this case, the answer is 10(5) = 50. 
+This is known as the multiplication principle.
+
+As a general rule:
+
+    If you find yourself saying “or,” you have to add.
+    If you find yourself saying “and” or “for every,” you have to multiply.
+
+
+
+
+Enumerations With Repetition
+3 min
+
+An ice cream parlor offers 27 different flavors of ice cream! Customers are allowed to fill their ice cream cone with three flavors of their choosing. How many 
+different ice cream treats can be constructed? For the first scoop, a customer can pick one out of 27 flavors. For the second scoop, they can also pick one out 
+of the 27, and the same goes for the third.
+
+This means that there are 27 options for the first scoop “and” 27 options for the second scoop “and” 27 options for the third scoop.
+
+The total number of ways to construct an ice cream cone is:
+
+Number of ways=27×27×27=273=19,683Number of ways=27×27×27=273=19,683
+
+In general, when you have to pick r items out of n possible choices with repetition allowed, the number of ways to do this is:
+
+n×n×n…×n=nrn×n×n…×n=nr
+
+
+
+
+
+
+Permutation
+3 min
+
+In this lesson, we will explore the concept of a permutation. A permutation is an arrangement or selection in which the order matters.
+
+Consider this scenario: a college student has just purchased a new bookshelf for her dorm room and she has a total of n books that she wishes to arrange on the shelf. How many different ways can she arrange her books?
+
+For the first spot on the shelf, she has n different options for the placement of a book. Next, since one book has already been placed, she now has n-1 books to place in the second spot. She will then have n-2 books for the third spot, n-3 books for the fourth spot, and so on. Suppose she has nine books in total, the arrangement of the bookshelf will look like this:
+
+9‾ 8‾ 7‾ 6‾ … 1‾
+
+9​ 
+
+8​ 
+
+7​ 
+
+6​ … 
+
+1​
+
+So there are:
+
+9×8×7×…×1=362,8809×8×7×…×1=362,880
+
+ways to arrange the books.
+
+For a general arrangement of n items, we have:
+
+n(n−1)(n−2)…1=n!n(n−1)(n−2)…1=n!
+
+Here, the ! is the factorial operator.
+
+Arranging n items without repetition results in n! a number of permutations.
+
+Note the following identities:
+
+    0! = 1
+    The factorial operation is undefined for numbers less than zero.
+
+
+
+Permutations of a Subset
+5 min
+
+In the previous exercise, you learned how to compute the number of permutations of n items. What if you were only interested in the permutation of r out of those n items (permutation of four out of seven items for example)? Let’s see how we can do this.
+
+Consider this problem: a website with weak password requirements requires that its users produce a password of five distinct, lowercase, English letters. How many possible permutations of passwords exist?
+
+The English alphabet has 26 letters in it and your password only requires five distinct characters (which will produce weak passwords), therefore you have:
+
+26×25×24×23×22=7,893,60026×25×24×23×22=7,893,600
+
+different possible passwords! A computer can easily brute force this password in a short amount of time.
+
+The general formula for this is:
+
+P=n(n−1)(n−2)(n−3)(n−4)P=n(n−1)(n−2)(n−3)(n−4)
+
+However, this is only valid for five options!
+
+In the general case, if we have n! total permutations but we only want r options, we need to eliminate the remaining n-r possible options. We do this by dividing n! by (n-r)! leaving us with the r terms we want.
+
+The formula for selecting (or arranging) r distinct objects from a set of n possible objects where their order matters and repetition is not allowed is:
+
+P(n,r)=n!/(n−r)!
+
+n!​
+
+Note the identity:
+
+P(n,n)=n!/(n−n)!=n!/0!=n!
+
+
+
+
+
+Combination
+7 min
+
+Until now, we have considered enumerations where the order of arrangement or selection matters. In the last exercise, one flight itinerary chosen could be New York, Virginia, Florida, Louisiana, Texas, Nevada, California.
+
+Or it could be New York, Florida, Virginia, California, Texas, Louisiana, Nevada,
+
+The first itinerary is a logical and efficient way of traveling as it requires a minimal change in direction. The second itinerary is an inefficient way to travel as the seemingly random selection of states requires many directional changes.
+
+In this scenario, the order in which the states are visited is important as it will affect the efficiency of the trip. To plan the most efficient trip possible, we can hire a company that will plan the trip for us. All we have to do is provide any list of seven states and the company will offer the best route possible. The order of the list of states we provide is now irrelevant. How many ways can we compose a list of seven US states?
+
+Initially, we had P(50, 7) different lists. This number is now reduced as any selection of seven states, ordered in any fashion, will produce the same outcome. Any list of seven states generated can be ordered in 7! different ways, all of which will return the same single list from the travel company. This scales P(50, 7) by 7!, which is:
+
+P(50,7)/7!=50!/7!(50−7)!=99,884,4007!
+
+
+An enumeration of distinct objects where the order does not matter is called a combination; it is the permutation of k items out n possible choices scaled by k!. The formula for this is:
+
+C(n,k)=n!/k!(n−k)!
+
+This operation is also called “choose” because we say “out of n items, choose k“. We also denote it like this:
+
+C(n,k)=(nk)=n!/k!(n−k)!
+
+Note the following identities:
+
+C(n,n)=1
+
+C(n,1)=n
+
+
+
+
+Permutations With Identical Items
+10 min
+
+In this exercise, we will explore how to enumerate elements of a multiset (a set that contains elements that are not necessarily distinct). Consider the problem of having to determine the number of permutations of the letters in the word CODE. From previous exercises, we know the number of permutations is 4!. What about the word CODEC? Claiming the answer is 5!, as you did for the word CODE, would be incorrect. This is because the letter C appears more than once. If we write the word like this C1ODEC2, the following permutation of the word exists: C2ODEC1 which is the same as the original word. Since both C’s are identical, it is irrelevant which one is in which position. Therefore we must scale the number of permutations down. To do this, we consider that the order of the two C’s, in whichever spot they appear, does not matter. Sounds familiar? That’s right, we scale down by 2!. So the number of permutations of the word CODEC is:
+
+5!2!=602!
+
+5!​=60
+
+If we were permuting a word with more than one repeated character, we would further scale down the permutations by the count of the other repeated letters. Generally speaking, the number of permutations of a multiset is:
+
+P(n;r1,r2,…,rk)=n!/r1!r2!…rk!
+
+Where n is the total size of the multiset and each of rk‘s represents the count of each element.
+
+Another way of computing this is to “choose” a spot for each element. Consider the word GOOGLE, how many permutations of this word can we have? We “choose” two spots for the G’s, “and” we “choose” two of the remaining spots for the O’s, “and” we “choose” one remaining spot each for the L and the E:
+
+P(6;2,2,1,1)=(62)(6−22)(4−21)(11)=180P(6;2,2,1,1)=(26​)(26−2​)(14−2​)(11​)=180
+
+Formally:
+
+P(n;r1,r2,r3…,rk)=(nr1)(n−r1r2)…(n−r1−…−rk−1rk)P(n;r1​,r2​,r3​…,rk​)=(r1​n​)(r2​n−r1​​)…(rk​n−r1​−…−rk−1​​)
+
+
+
+Element Composition
+5 min
+
+When enumerating a multiset, we are sometimes interested in the relative order of some members of the set. Take for example the problem of figuring out how many ways we can order the letters in the word APPLE such that the two P’s appear next to one another (ELPPA for example). The set of letters in this problem is S = {A, P, P, L, E} which is a set of cardinality five. Since we want the two P’s together, we can treat them as a single element PP. The set now looks like this: S = {A, PP, L, E} of cardinality four. We would enumerate this using the same technique as we did in Exercise 2 to obtain an answer of:
+
+4!=244!=24
+
+There are 24 possible permutations of the word APPLE in which the two P’s are next to one another.
+
+
+
+Set Exclusion
+5 min
+
+If we want to find out the number of ways NOT to do something, we could break it down into the subcases that are allowed and then combine those. Sometimes this may be inefficient as there might be many more subcases that are allowed than there are ones that are not. We note that a subcase may either be allowed or not allowed leading to the following equation:
+
+total number of ways=∑subcases allowed+∑subcases not allowedtotal number of ways=∑subcases allowed+∑subcases not allowed
+
+From this equation, we can see that if the number of cases not allowed is smaller than the number of cases allowed, we can calculate the number of cases allowed by rearranging the formula to get
+
+∑subcases allowed=total number of ways−∑subcases not allowed∑subcases allowed=total number of ways−∑subcases not allowed
+
+Let’s see how this works. How many ways can we rearrange the letters in the word YAHOO such that the two O’s are not together? We could consider every possible case in which the two letters are not together (YAOHO + OYAHO + etc…) which requires much more work than simply counting the number of ways the two letters are together and the total number of ways we can rearrange the word. The total number of permutations of the word YAHOO is:
+
+5!2!2!
+
+5!​
+
+Remember, we divide by 2! because there are two O’s.
+
+The number of ways we can rearrange the word with the two O’s next to either is done by combining the two O’s into one super letter and then computing the number of arrangements we can have of the letters Y, A, H, and OO so 4!. So the total number of ways NOT allowing the two O’s together is
+
+5!2!−4!=362!
+
+5!​−4!=36
+
+36 ways of rearranging the word YAHOO without the two O’s being together.
+
+
+
+
+
+Permutations and Combinations: Lesson
+Review
+<1 min
+
+Congratulations on getting this far! We’ve covered a lot of topics in the fundamentals of combinatorics and as of now, you should have a solid understanding of the topic! Let’s briefly recap the important concepts and formulas.
+
+    Enumeration means arranging or selecting items from a set/multiset.
+    The Addition and Multiplication Principle
+        “And” or “for every” means multiply
+        “Or” means add
+    The number of ways to enumerate r items from a set of n distinct elements:
+        Order matters; repetition allowed:
+
+n×n×n…×n=nrn×n×n…×n=nr
+
+* Order matters; repetition not allowed (permutation):
+
+P(n,r)=n!/(n−r)!
+
+
+* Order does not matter; repetition not allowed (combination):
+
+C(n,k)=n!/k!(n−k)!=(nk)
+
+* Order does not matter; repetition allowed:
+
+C(r+n−1,r)=(r+n−1)!/r!(n−1)!
+
+    Permutations of a multiset:
+
+P(n;r1,r2,…,rk)=n!/r1!r2!…rk!
+
+
+
+    Solving an enumeration problem sometimes requires breaking it down into subcases, solving those, and then combining those solutions.
+
+    If you have a case where there are more cases allowed than not allowed, it may be easier to deduct the disallowed cases from the total to determine the number of allowed cases.
+
+∑subcases allowed=total number of ways−∑subcases not allowed∑subcases allowed=total number of ways−∑subcases not allowed
+
+Excellent work!!

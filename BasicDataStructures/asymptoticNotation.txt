@@ -1,0 +1,352 @@
+Why Asymptotic Notation?
+
+Learn why asymptotic notation is an essential tool for becoming an efficient programmer.
+
+When writing programs, it’s important to make smart programming choices so that code runs most efficiently. Computers seem to take no time evaluating programs, 
+but when scaling programs to deal with massive amounts of data, writing efficient code becomes the difference between success and failure. In computer science, 
+we define how efficient a program is by its runtime.
+
+We can’t just time the program, however, because different computers run at different speeds. My dusty old PC does not run as fast as your brand new laptop. 
+Programming is also done in many different languages, how do we account for that in the runtime? We need a general way to define a program’s runtime across 
+these variable factors. We do this with Asymptotic Notation.
+
+With asymptotic notation, we calculate a program’s runtime by looking at how many instructions the computer has to perform based on the size of the program’s input. 
+For example, if I were calculating the maximum element in a collection, I would need to examine each element in the collection. That examining step is the same 
+regardless of the language used, or the CPU that’s performing the calculation. In asymptotic notation, we define the size of the input as N. I may be looking 
+through a collection of 10 elements, or 100 elements, but we only need to know how many steps are performed relative to the input so N is used in place of a 
+specific number. If there is a second input, we may define the size of that input as M.
+
+There are varieties of asymptotic notation that focus on different concerns. Some will communicate the best case scenario for a program. For example, 
+if we were searching for a value within a collection, the best case would be if we found that element in the first place we looked. Another type will 
+focus on the worst case scenario, such as if we searched for a value, looked in the entire dataset and did not find it. Typically programmers will focus on 
+the worst case scenario so there is an upper bound of runtime to communicate. It’s a way of saying “things may get this bad, or slow, but they won’t get worse!”
+
+In this next module, we will learn more about asymptotic notation, how to properly analyze the runtime of a program through asymptotic notation, and how to take 
+into consideration the runtime of different data structures and algorithms when creating programs. Learning these skills will change the way you think when you 
+design programs and it will prepare you for the software engineering world where creating efficient programs is an essential skill.
+
+Let’s dive into the world of asymptotic notation!
+
+
+What is Asymptotic Notation?
+7 min
+
+Cheetahs. Ferraris. Life. All are fast, but how do you know which one is the fastest? You can measure a cheetah’s and a Ferrari’s speed with a speedometer. 
+You can measure life with years and months.
+
+But what about computer programs? In fact, you can time a computer program, but different computers run at different speeds. For example, a program that takes 
+12 nanoseconds on one computer could take 45 milliseconds on another. Therefore, we need a more general way to gauge a program’s runtime. 
+We do this with Asymptotic Notation.
+
+Instead of timing a program, through asymptotic notation, we can calculate a program’s runtime by looking at how many instructions the computer has to perform 
+based on the size of the program’s input: N.
+
+For instance, a program that has input of size N may tell the computer to run 5N2+3N+2 instructions. (We will get into how we get this kind of expression in 
+future exercises.) Nevertheless, this is still a fairly messy and large expression. For asymptotic notation, we drop all of our constants (the numbers) because 
+as N becomes extremely large, the constants will make minute differences. After changing our constants, we have N2+N. If we take each of these terms in the 
+expression and graph them, we see that the N2 term grows faster than the N term.
+
+alt text
+
+For example, when N is 1000:
+
+    the N2 term is 1,000,000
+    the N term is 1,000
+
+As you can see, the N2 term is much more significant than the N term. When N is larger than 1000, the difference becomes even more significant. Because the difference 
+is so enormous, we don’t even need to consider the N term when calculating the runtime. Thus, for this program, we would describe the runtime in terms of N2. 
+There are three different ways we could describe the runtime of this program: big Theta or Θ(N2), big O or O(N2), big Omega or Ω(N2). The difference between 
+the three and when to use which one will be detailed in the next exercises.
+
+You may see the term execution count used in evaluating algorithms. Execution count is more precise than Big O notation. The following method, addUpTo(), 
+depending on how we count the number of operations, can be as low as 2N or as high as 5N + 2
+
+public class Main() { 
+  void int addUpTo(int n) {
+    int total = 0;
+    for (int i = 1; i <= n; i++) {
+      total += i;
+    }
+  return total;
+  } 
+}
+
+Determining execution count can increase in difficulty as our algorithms become even more sophisticated!
+
+But regardless of the execution count, the number of operations grows roughly proportionally with n. If n doubles, the number of operations will also roughly double.
+
+Big O Notation is a way to formalize fuzzy counting. It allows us to talk formally about how the runtime of an algorithm grows as the inputs grow. As we will see, 
+Big O doesn’t focus on the details, only the trends
+
+
+
+Asymptotic means as N approaches infinity
+
+
+
+
+Big Theta (Θ)
+5 min
+
+The first subtype of asymptotic notation we will explore is big Theta (denoted by Θ). We use big Theta when a program has only one case in terms of runtime. 
+But what exactly does that mean? Take a look at the pseudocode for a function that prints the values in a list below:
+
+Function with input that is a list of size N:
+   For each value in list:
+    Print the value
+
+The number of instructions the computer has to perform is based on how many iterations the loop will do because if the loop does more iterations, 
+then the computer will perform instructions. Now, let’s see how many iterations the loop will do dependent on the value of N.
+Size of List 	–vs.– 	Number of Iterations
+1 		1
+2 		2
+3 		3
+. 		.
+. 		.
+. 		.
+. 		.
+. 		.
+N 		N
+
+As we can see in every case, with a list of size N, the program has a runtime of N because the program has to print a value N times. 
+Thus, we would say the runtime is Θ(N).
+
+Let’s look at a more complicated example. In the following pseudocode program, the function takes in an integer, N, and counts the number of 
+times it takes for N to be divided by 2 until N reaches 1.
+
+Function that has integer input N:
+    Set a count variable to 0
+    Loop while N is not equal to 1:
+        Increment count
+        N = N/2
+    Return count
+
+Now, let’s see how many iterations the loop will perform based on N.
+N 	–vs.– 	Number of Iterations
+1 		0
+. 		.
+. 		.
+. 		.
+2 		1
+. 		.
+. 		.
+. 		.
+4 		2
+. 		.
+. 		.
+. 		.
+8 		3
+. 		.
+. 		.
+. 		.
+16 		4
+. 		.
+. 		.
+. 		.
+N 		log2N
+
+As we can see, in every case, with an integer N, the loop will iterate log2(N) times. However, because we drop constants in asymptotic notation, 
+we would say that the runtime of this program is Θ(log N).
+
+But what happens when there are multiple runtime cases for a single program? We will learn about that in a future exercise.
+
+
+
+Common Runtimes
+2 min
+
+Before we delve into the multiple runtime cases, let’s see the different common runtimes a program could have. Below is a list of common runtimes that run 
+from fastest to slowest.
+
+    Θ(1). This is constant runtime. This is the runtime when a program will always do the same thing regardless of the input. For instance, 
+    a program that only prints “hello, world” runs in Θ(1) because the program will always just print “hello, world”.
+    Θ(log N). This is logarithmic runtime. You will see this runtime in search algorithms.
+    Θ(N). This is linear runtime. You will often see this when you have to iterate through an entire dataset.
+    Θ(N*logN). You will see this runtime in sorting algorithms.
+    Θ(N2). This is an example of a polynomial runtime. When N is raised to the 2nd power, it’s known as a quadratic runtime. 
+    You will see this runtime when you have to search through a two-dimensional dataset (like a matrix) or nested loops.
+    Θ(2N). This is exponential runtime. You will often see this runtime in recursive algorithms (Don’t worry if you don’t know what that is yet!).
+    Θ(N!). This is factorial runtime. You will often see this runtime when you have to generate all of the different permutations of something. 
+    For instance, a program that generates all the different ways to order the letters “abcd” would run in this runtime.
+
+
+
+Big Omega (Ω) and Big O (O)
+6 min
+
+Sometimes, a program may have a different
+Preview: Docs Runtime is the period of time during which a program is running.
+runtime
+for the best case and worst case. For instance, a program could have a best case runtime of Θ(1) and a worst case of Θ(N). 
+We use a different notation when this is the case. We use big Omega or Ω to describe the best case and big O or O to describe the worst case. 
+Take a look at the following
+Preview: Docs Pseudocode is a method of describing the steps in an algorithm or other computed process written in plain language. 
+It does not rely on any particular implementation of a programming language, and instead is intended for a human audience. 
+It omits the portions required for machine implementation of the algorithm, such as variable declarations, and includes natural language description details.
+pseudocode
+that returns True if 12 is in the list and False otherwise:
+
+Function with input that is a list of size N:
+    For each value in the list:
+        If value is equal to 12:
+            Return True
+    Return False
+
+How many times will the loop iterate? Let’s take a list of size 1000. If the first value in the list was 12, then the loop would only iterate once. 
+However, if 12 wasn’t in the list at all, the loop would iterate 1000 times. If the input was a list of size N, the loop could iterate anywhere 
+from 1 to N times depending on where 12 is in the list (or if it’s in the list at all). Thus, in the best case, it has a constant runtime and 
+in the worst case it has a linear runtime.
+
+There are many ways we could describe the runtime of this program:
+
+    This program has a best case runtime of Θ(1).
+    This program has a worst case runtime of Θ(N).
+    This program has a runtime of Ω(1).
+    This program has a runtime O(N).
+
+You may be tempted to say the following:
+
+    This program has a runtime of Θ(N).
+
+However, this is not true because the program does not have a linear runtime in every case, only the worst case.
+
+In fact, when describing runtime, people typically discuss the worst case because you should always prepare for the worst case scenario! Often times, 
+in technical interviews, they will only ask you for the big O of a program.
+
+Great! Now you know the different types of asymptotic notation and when to use which one! Now, let’s delve into more complex program runtimes!
+
+
+typically you will always be asked to describe runtime with big O since its always that the worst case is sought for 
+
+
+
+Adding Runtimes
+3 min
+
+Sometimes, a program has so much going on that it’s hard to find the
+Preview: Docs Loading link description
+runtime
+of it. Take a look at the
+Preview: Docs Pseudocode is a method of describing the steps in an algorithm or other computed process written in plain language. 
+It does not rely on any particular implementation of a programming language, and instead is intended for a human audience. 
+It omits the portions required for machine implementation of the algorithm, such as variable declarations, and includes natural language description details.
+pseudocode
+program that first prints all the positive values up to N and then returns the number of times it takes to divide N by 2 until N is 1.
+
+Function that takes a positive integer N:
+    Set a variable i equal to 1
+    Loop until i is equal to N:
+        Print i
+        Increment i
+    
+    Set a count variable to 0
+    Loop while N is not equal to 1:
+        Increment count
+        N = N/2
+    Return count
+
+Rather than look at this program all at once, let’s divide into two chunks: the first loop and the second loop.
+
+    In the first loop, we iterate until we reach N. Thus the runtime of the first loop is Θ(N).
+    However, the second loop, as demonstrated in a previous exercise, runs in Θ(log N).
+
+Now, we can add the runtimes together, so the runtime is Θ(N) + Θ(log N).
+
+However, when analyzing the runtime of a program, we only care about the slowest part of the program, and because Θ(N) is slower than Θ(log N), 
+we would actually just say the runtime of this program is Θ(N). It is also appropriate to say the runtime is O(N) because if it runs in Θ(N) 
+for every case, then it also runs in Θ(N) for the worst case. Most of the time people will just use big O notation.
+
+
+
+Space Complexity
+
+Learn about space complexity using examples in Python.
+
+Asymptotic notation is often used to describe the runtime of a program or algorithm, but it can also be used to describe the space, or memory, 
+that a program or algorithm will need.
+
+Think about a simple function that takes in two numbers and returns their sum:
+
+def add_numbers(a, b):
+  return a + b
+
+This function has a space complexity of O(1), because the amount of space it needs will not change based on the input. While this function also has a 
+constant runtime of O(1), most functions do not have matching space and time complexities.
+
+Let’s take a look at another function:
+
+def simple_loop(input_array):
+  for i in input_array:
+    print(i)
+
+As we know, a simple for loop that goes through every element in an array of size n has a linear runtime of O(n). However, this function takes O(1) 
+space since no new variables are being created and therefore no more space must be allocated.
+
+A recursive function that is passed the same array or object in each call doesn’t add to the space complexity if the array or object is passed by 
+reference (which it is in Python).
+
+Like with time complexity, space complexity denotes space growth in relation to the input size. It’s also important to note that space complexity 
+usually refers to any additional space that will be needed, and doesn’t count the space of the input. So a function could have 10 arrays passed into it, 
+but if all it does inside is print 'Hello World!', then it still takes O(1) space.
+
+
+
+
+
+
+Consider the double_array() and find_min() functions. Both have big O runtimes of O(n), but what are their space complexities?
+Code
+
+def double_array(input_array):
+  # Returns an array that is the double of the input array
+  length = len(input_array)
+  doubled_array = [0] * length
+  for i in range(length):
+    doubled_array[i] = input_array[i] * 2
+  return doubled_array
+
+
+def find_min(input_array):
+  # Returns the smallest element in the array
+  minimum = input_array[0]
+  for i in input_array:
+    if i < minimum:
+      minimum = i
+  return minimum
+
+
+
+
+  from the above example double_array() has a complexity of 0(n) and find_min() has a complexity of 0(1)
+
+Yes! double_array() creates a new array that matches the size of the input array, so the space needed for this function will change as 
+the size of the input array changes. find_min() only creates one new variable regardless of the input, so its size is constant.
+
+Space complexity is important to consider alongside time complexity when comparing data structures and algorithms. While two functions 
+may have very similar runtimes, one could use less space. Consider the double_array() function from above. It has a runtime of O(n), and 
+takes O(n) space. Could we optimize it to have a better space complexity?
+
+def double_in_place(input_array):
+  length = len(input_array)
+  for i in range(length):
+    input_array[i] *= 2
+  return input_array
+
+double_in_place() does the same thing as double_array() and in the same amount of time, but only takes O(1) space, simply because it doesn’t 
+create a new array. As you move forward, remember that just because a program has the best runtime possible, doesn’t mean it can’t still be optimized. 
+
+
+
+Analyzing Runtime
+8 min
+
+Now that you’ve started learning how to use asymptotic notation to measure the
+Preview: Docs Loading link description
+runtime
+of a function, let’s practice with Python!
+
+When analyzing the runtime of a function, it’s necessary to check the number of iterations the loop will perform based on the size of the input.
+
+The count function on the right takes in a positive integer of size N and returns the number of times it takes to divide N by 2 until N reaches 1.
+
+We can analyze the runtime of this function by counting the number of iterations the while loop will perform based on the size of the input.
