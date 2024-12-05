@@ -1,0 +1,481 @@
+Memory Hierarchy
+7 min
+
+What is a memory hierarchy and why is it important? Let’s answer the second part of that question by looking at the graph below:
+
+Performance gap of processors and memory
+
+Year after year,
+Preview: Docs Loading link description
+processor
+performance increases at a much higher rate than that of memory. This is the processor-memory performance gap and results in a computer that can process data much 
+faster than it can retrieve data from memory.
+
+In the gardening example from the previous exercise, you needed to get fertilizer from the store. The garden is equivalent to the processor and 
+retrieving the fertilizer from the store is the same as retrieving data from the main memory.
+
+Simple Memory Hierarchy
+
+The image above represents a simple memory hierarchy. At the top is the processor with the best performance. But it can only hold a small 
+amount of data. At the bottom is memory with decreased performance but increased size for data. This memory is the DDR memory used widely 
+in computers today and throughout this lesson, it will be called the main memory.
+
+The middle section of the memory hierarchy is the
+Preview: Docs Loading link description
+cache
+and is equivalent to your storage shed in the gardening example. The shed is where the extra fertilizer is stored for later use. 
+Cache memory is similar in that it stores data for faster access times to help bridge the processor-memory performance gap.
+
+
+
+
+
+from isa import ISA
+from memory import Memory, MainMemory
+
+if __name__ == "__main__":
+  cache_arch = ISA()
+  # Write your code below
+  
+
+  # Architecture runs the instructions
+  cache_arch.read_instructions("ex2_instructions")
+
+  # This outputs the memory data and code execution time
+  exec_time = cache_arch.get_exec_time()
+  if exec_time > 0:
+    print(f"OUTPUT STRING: {cache_arch.output}")
+    print(f"EXECUTION TIME: {exec_time:.2f} nanoseconds")
+
+
+
+Throughout this lesson, you will work with a simulated memory hierarchy. A description of each file is in the Hint.
+
+In app.py an instance of the ISA() class is assigned to cache_arch. This is the simulated architecture that will run instructions to access the memory hierarchy.
+
+The .read_instructions() method is called and passed ex2_instructions. This will run the code to retrieve data from memory.
+
+Instead of using binary or hex data in the simulation, the data stored in memory will be alphanumeric characters, such as "a" or "Z".
+
+Run the code. The output shows there is no memory found in the architecture.
+
+The code through this lesson is a simulated memory hierarchy and consists of 5 files:
+
+    isa.py: implements a simple architecture including registers and a reference to the next level of memory in the hierarchy. The module also defines few memory access commands and allows for the reading of instructions from a file. -code.txt is a group of instructions that the architecture will run for each exercise.
+    memory.py defines the different memory types included in the architecture. To start there is a generic memory class Memory() which the Register() and MainMemory() classes inherit from. The distinctive features of each memory type are the data size and the access time.
+    app.py is the file you will use to configure the architecture and output important information regarding the memory access process. -cache.py is where you will implement the cache. It is currently empty.
+
+
+
+
+.
+
+Next, we’ll add main memory to the architecture.
+
+Directly following cache_arch initialization, call the .set_memory() method of cache_arch with the argument MainMemory().
+
+When you run app.py you should see the console output of each instruction that accesses the main memory. In the end, the simulation outputs a text string of all the data accessed from the main memory and the total execution time.
+
+Call cache_arch.set_memory() with MainMemory(). Use the following syntax:
+
+ISA_instance.method(MemorySubClass())
+
+
+
+from isa import ISA
+from memory import Memory, MainMemory
+
+if __name__ == "__main__":
+  cache_arch = ISA()
+  # Write your code below
+  cache_arch.set_memory(MainMemory())
+  
+
+  # Architecture runs the instructions
+  cache_arch.read_instructions("ex2_instructions")
+
+  # This outputs the memory data and code execution time
+  exec_time = cache_arch.get_exec_time()
+  if exec_time > 0:
+    print(f"OUTPUT STRING: {cache_arch.output}")
+    print(f"EXECUTION TIME: {exec_time:.2f} nanoseconds")
+
+
+
+
+
+
+Cache Memory
+8 min
+
+Preview: Docs A cache is data stored locally in an application for faster retrieval.
+Cache
+memory can hold more data than the
+Preview: Docs Loading link description
+processor
+but less than main memory. Its size means data retrieval is slower than that within the processor but is faster than that from main memory.
+
+Cache memory performance and size is a compromise between the processor and main memory, but these aren’t the only characteristics of the cache that help bridge 
+the performance gap. The structure and behavior of the cache are what lead to quicker data retrieval.
+
+The cache is made up of blocks and each one stores a copy of data from the main memory. When a piece of data is stored in the cache, it is paired with a tag 
+which is equal to the address of the data in the main memory. This simplifies retrieval since the processor uses the same address when accessing data from 
+the cache and main memory. A tag and data pair in a block of cache is called an entry.
+
+A cache with data in 2 blocks
+
+The diagram above represents a small cache with 4 blocks. The cache has two entries from the main memory: the character "Q" with a tag 15 and the character 
+"c" with a tag 2. Remember the tag is the main memory address of the data and is what is used to indicate if the requested data is located in the cache.
+
+
+
+Cache Hit
+7 min
+
+When the data requested from the
+Preview: Docs Loading link description
+processor
+is in the
+Preview: Docs Loading link description
+cache
+, a cache hit occurs:
+
+A cache hit
+
+In the animation, there is a memory hierarchy with a cache in between the processor and main memory. The processor requests the data located at the main memory address 2. The address is found inside the cache so a cache hit occurs. The character "c" will be returned from the cache and the main memory is never accessed.
+
+The goal of the memory hierarchy is to reduce data access time by getting as many cache hits when requesting data from memory.
+
+
+
+Cache Miss
+4 min
+
+When the data requested from the
+Preview: Docs Loading link description
+processor
+is not in the
+Preview: Docs Loading link description
+cache
+, a cache miss occurs:
+
+A cache miss
+
+The above animation represents a cache miss. The data request first goes to the cache. When the data is not found in the cache, a cache miss occurs and the request goes to the main memory. The memory address and retrieved data will then be placed in the cache. Finally, the processor will finish the request by retrieving the data from the cache.
+
+While a cache miss helps put the needed data in the cache, the goal of the cache is to limit the cache misses.
+
+
+
+Replacement Policy
+6 min
+
+What happens when the
+Preview: Docs Loading link description
+cache
+is full and a cache miss occurs? The incoming data will need to replace an existing entry in the cache. But, which entry?
+
+The decision about which populated entry will be replaced with new data is made by the cache’s replacement policy. This decision might be random or it might use information about the cache entries. When choosing a replacement policy for an architecture, designers look at how to improve performance while keeping the design simple.
+First In First Out (FIFO)
+
+This policy replaces the entries in the order that they came into the cache. An
+Preview: Docs Loading link description
+index
+is maintained by the cache that points to the next entry to be replaced. After replacement, the index is incremented or set back to the first entry if the last entry was just replaced.
+Least Recently Used (LRU)
+
+This policy replaces the entry with the most time passed since it was last accessed. This requires that each entry have a way to keep track of when it was last accessed compared to the other entries. This implementation is the most difficult to implement and the design may not be worth the improved performance.
+Random Replacement
+
+This policy chooses a cache entry at random. It is easier to implement than the FIFO and LRU policies.
+
+The correct replacement policy is key to increasing the number of cache hits achieved by the
+Preview: Docs Loading link description
+processor
+. The random replacement policy is simple to implement but might cause more cache misses than the other 2 policies. The LRU policy is more complicated but tends to do a better job at keeping data in the cache that will be used again.
+
+
+
+
+
+
+Associativity
+7 min
+
+Up until now, data from the main memory has been placed in any block of the
+Preview: Docs Loading link description
+cache
+. What if each location in the main memory can be placed in specific cache blocks? Associating memory locations to specified cache blocks is called cache associativity.
+
+There are three types of associativity:
+Fully Associative
+
+Each location in the main memory can go to any block in the cache. This has been the behavior of the cache so far in this lesson.
+Direct Mapped
+
+This association is where every location in the main memory can only be placed in one specified block in the cache. Direct-mapped associativity does not require a 
+replacement policy since there is only one cache entry for each location in the main memory.
+
+Direct Mapped Associativity Image
+n-Way Set Associative
+
+This cache associativity breaks the cache into sets of n blocks. Each location in the main memory is mapped to a specified set of blocks. This 
+requires a replacement policy but one that only keeps track of n blocks in each set. An 4 block cache with 2 blocks per set is called 2-way set
+associative and has a total of 2 sets. Each location in the main memory is mapped to a set of 2.
+
+2-Way Set Associative Image
+
+Fully associative and direct-mapped cache are types of set-associative caches. A fully associative cache with 32 blocks is considered to be a 32-way 
+set associated with one set. A direct-mapped cache with 32 blocks is considered to be a 1-way set associated with 32 sets.
+
+
+
+Write Policy
+6 min
+
+So what about writing to memory?
+
+When the
+Preview: Docs A processor is the electric circuitry found in computer hardware which is responsible for executing instruction sets derived from programs that have been converted into machine code.
+processor
+writes data to memory it is always written to
+Preview: Docs Loading link description
+cache
+. Just like a cache read, the memory address is searched within the tags of the cache entries. During a write, if the address is found the data is overwritten in the cache. If it is not found the replacement policy is used to decide which entry will be replaced with the entry.
+
+The decision of when to send data to the main memory is made by the cache write policy. Here are two common write policies:
+Write-through
+
+The write-through policy will write the data to the main memory at the same time it is written to cache. This policy is easy to implement since there are no decisions that need to be made after the data is written to cache. The downside is that every write will require a main memory access which is slower and sometimes unnecessary.
+Write-back
+
+The write-back policy will only write the data to the main memory when the memory address in the associated cache entry is overwritten. This policy is more complicated to implement because the data in cache now has to be monitored.
+
+The benefit of the write-back policy is that every write does not access the main memory. It is possible for the processor to put data in the cache, access it multiple times, and not need it anymore without ever having to write it to the main memory. When using the write-back policy, this saves time over many write cycles.
+
+
+
+Summary
+<1 min
+
+Nice job reaching the end of this lesson! Here is a summary of the topics we covered:
+
+    Including
+    Preview: Docs Loading link description
+    cache
+    memory in the memory hierarchy helps bridge the processor-memory performance gap.
+    Copies of data are stored in the cache to give the
+    Preview: Docs Loading link description
+    processor
+    quicker access to the data compared to the main memory.
+    A cache hit is when requested data is located in the cache.
+    A cache miss is when requested data is not located in the cache and the data must be retrieved from the main memory.
+    A cache replacement policy defines what entry in cache will be replaced by new data.
+    Cache associativity assigns main memory locations to specified cache entries.
+    A cache write policy defines how data is written back down the memory hierarchy.
+
+
+
+    The Cache() class is complete for this lesson, but more can be done. Here are some ideas:
+        Add the LRU replacement policy
+        Implement the write-back policy
+        Create a 2nd cache between this cache and the main memory.
+
+
+
+
+
+
+
+
+
+
+
+Skip to Content
+My Home
+Cache Problem Set
+
+Complete these problems involving Cache reads, writes, hits and misses.
+Part 1
+Answer questions based on the following diagram
+
+A CPU with a four-block cache and main memory with 16 locations for data Info:
+
+    The above architecture represents a CPU with a four-block cache and main memory with 16 locations for data.
+    The processor will sequentially read data from the following main memory locations:
+
+[8,3,4,12,10,7,3,2,6,3,1,7,8,6]
+
+Free response
+
+Given a cache that is fully associative and uses the FIFO replacement policy, track the tags in the cache during the read requests and answer the following questions:
+
+    How many cache misses occur?
+    How many cache hits occur?
+    What are the tags in each cache entry at the end of all the requests?
+
+Your response
+
+16 4 1,7,8,6
+Our answer
+
+The following table tracks the data retrieval, misses, hits, and cache contents.
+
+Tracking Table For Cache Retrievals
+Table Walkthrough
+
+    Since the cache is fully associative there is one set, Set 0. Memory locations can go anywhere in the cache.
+    The first 4 location retrievals (8, 3, 4, 12) are cache misses and initially populate the cache.
+    The 5th location retrieval is 10 and is a cache miss.
+    With a FIFO replacement policy, the entry replaced will be the one that’s been around the longest. The entry with tag 8 is replaced with tag 10.
+    The next four location retrievals (7, 3, 2, 6) are cache misses and replace the entries in the same order as they were added.
+    When location 3 is retrieved for the third time, it results in a cache hit. The contents of the cache stay the same.
+    The next 4 location retrievals result in 3 misses and a hit respectively.
+
+Using the table we get the following answers:
+Answer 1
+
+12 Misses
+Answer 2
+
+2 Hits
+Answer 3
+
+    Tag 1: 6
+    Tag 2: 1
+    Tag 3: 7
+    Tag 4: 8
+
+Free response
+
+Now let’s make the cache 2-way set associative, with the first 2 blocks of the cache being one set and the last 2 entries the other set. The memory location addresses alternate between cache sets.
+
+Given the same replacement policy, track the tags during the read requests and answer the following questions:
+
+    How many cache misses occur?
+    How many cache hits occur?
+    What are the tags in each cache entry at the end of all the requests?
+
+Your response
+
+5
+Our answer
+
+The following table tracks the data retrieval, misses, hits, and cache contents.
+
+Tracking Table For Cache Retrievals
+Table Walkthrough
+
+    With the cache now 2-way set associative there are 2 sets: Set 0, Set 1. Even number memory locations go to Set 0 and odd to Set 1.
+    The first 3 location retrievals (8, 3, 4) are cache misses and initially populate the cache with 8 and 4 going to Set 0 and 3 going to Set 1.
+    The 4th and 5th location retrievals are 12 and 10, are both cache misses, and each replaces the oldest entries respectively in Set 0. The entry with tag 8 is replaced with tag 12 and the entry with tag 4 is replaced with tag 10
+    The 6th location retrieval is 7, is a miss, and is added as an entry in Set 1.
+    The rest of the location retrievals place even numbers in Set 0 and odd in Set 1 and results in 4 cache hits and 4 cache misses.
+
+Using this table we get the following answers:
+Answer 1
+
+10 Misses
+Answer 2
+
+4 Hits
+Answer 3
+
+    Tag 1 (Set 0): 8
+    Tag 2 (Set 0): 6
+    Tag 3 (Set 1): 1
+    Tag 4 (Set 1): 7
+
+Free response
+
+Now make the cache direct-mapped and answer the following questions:
+
+    With the direct-mapped cache, what would be the best replacement policy? Explain your answer.
+    Without tracking the tags through all the read requests, what are the final tags in the cache?
+
+Your response
+
+6
+Our answer
+
+A 4 block direct-mapped cache has 4 sets. Each location in memory is mapped to a single block set based on address % 4.
+Answer 1
+
+Since this is a direct-mapped cache with each memory address being assigned a single block in the cache, a replacement policy isn’t necessary.
+Answer 2
+
+If you start at the bottom of the address list and place each request in its associated empty set you get:
+
+    Tag 1 (Set 0): 8
+    Tag 2 (Set 1): 1
+    Tag 3 (Set 2): 6
+    Tag 4 (Set 3): 7
+
+Part 2
+Answer questions based on the following situation
+
+A CPU architecture has a 4 block cache that is fully associative and has a FIFO replacement policy. The access time of the cache is 0.5 ns and the access time of the main memory is 30 ns.
+
+The processor sequentially writes to the following address locations:
+
+[1,4,6,2,1,4,7,4,1,4,7,0]
+
+Free response
+
+Using the write-through policy and starting with an empty cache and main memory, answer the following questions:
+
+    What is the total access time of the cache writes?
+    What is the total access time of the main memory writes?
+    What is the total access time of both the cache and the main memory writes?
+
+Your response
+
+8
+Our answer
+
+Each write will access the cache and the main memory. Therefore:
+Answer 1
+
+12 writes * 0.5ns = 6ns
+Answer 2
+
+12 writes * 30 ns = 360ns
+Answer 3
+
+6ns + 360ns = 366ns
+Free response
+
+Using the write-back policy and starting with an empty cache and main memory, answer the following questions.
+
+    What is the total access time of the cache writes?
+    What is the total access time of the main memory writes?
+    What is the total access time of both the cache and the main memory writes?
+
+Your response
+
+7
+Our answer
+
+The following table tracks the data writes to cache and notes any writes to main memory. Cache Write-Back Policy Tracking
+Table Walkthrough
+
+    With the write-back policy, data is only written back to memory when its location is replaced in the cache.
+    Since the cache is fully associative there is one set, Set 0. Memory locations can go anywhere in the cache.
+    The first 4 cache writes (1, 4, 6, 2) are cache misses and initially populate the cache. No main memory writes occur.
+    The 5th and 6th writes (1, 4) are cache hits, no main memory writes occur.
+    The next write is to location 7 and is a cache miss. With a full cache the oldest entry with tag 1 needs to be replaced. This results in a main memory write and the entry tag 1 becomes tag 7.
+    For the remaining writes, every cache hit is not a write to the main memory while every cache miss is.
+
+Using the table we get the following:
+Answer 1
+
+12 writes * 0.5ns = 6ns
+Answer 2
+
+4 writes * 30 ns = 120ns
+Answer 3
+
+6ns + 120ns = 126ns
+Back (alt + , )
+Next (alt + . )
+

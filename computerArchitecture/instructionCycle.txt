@@ -1,0 +1,558 @@
+Skip to Content
+My Home
+The Instruction Cycle
+
+Learn about the different stages an instruction goes through in order to be processed by the CPU.
+
+In order for a single instruction to be executed by the CPU, it must go through the instruction cycle (also sometimes referred to as the fetch-execute cycle). 
+While this cycle can vary from CPU to CPU, they typically consist of the following stages:
+
+    Fetch
+    Decode
+    Execute
+    Memory Access
+    Registry Write-Back
+
+In this article, we’ll go through the different stages of the instruction cycle to gain a better understanding of how the CPU handles instructions.
+Fetching
+
+From the moment we turn our computers on, the CPU is ready to process instructions. As instructions come in, a register in the CPU referred to as the 
+Program Counter (PC) stores the memory address of the instruction that should be processed next. When it’s time to start processing the instruction, 
+the CPU copies the instruction’s memory address and stores the copied data to another register on the CPU called the Instruction Register (IR). 
+Once the memory of the instruction is available, the instruction gets decoded.
+
+Think of being at a deli. As you come in and give your order, a ticket containing your data (name, number in line, and food order) is created and placed 
+somewhere that the deli staff can easily access and refer to. Once your number comes up, then someone will start working on your order!
+Decoding
+
+The next stage in the cycle involves decoding the instruction. During this stage, the Control Unit deciphers what the instruction stored in the IR means. 
+For example, the instruction could have been sent to do an arithmetic operation or to send information to another piece of hardware. As the instruction is
+decoded, they are turned into a series of control signals that are used to execute the instruction.
+
+Back at the deli, a staff member picks up your order ticket. Before they start making your order, they first need to figure out what you’re asking them to make!
+Execution
+
+In this stage, the instruction is performed! We noted that during the decoding stage, the instruction is decoded into control signals and sent to the correct part of the ALU to be processed and completed.
+
+In our deli example, this is the part where the order gets made!
+
+So to recap, in order to process an instruction, we need to fetch it from memory, decode the instruction, and execute it. That’s all, right? Not quite! Sometimes a few extra stages need to occur before or after execution.
+Memory Access
+
+The memory access stage is used to retrieve any required data necessary to execute an instruction. This stage only occurs if the instruction requires data from memory. For example, imagine the following Python code:
+
+x = 5
+y = x + 3
+
+Once the first instruction is complete, a piece of memory is created to store the data x = 5. The second instruction, y = x + 3, is a little trickier to execute because the value of y relies on whatever value was assigned to x. Before y = x + 3 can be executed, we need to access the memory address of the first instruction x = 5 in order to retrieve the data that tells us what the value of x is.
+
+Imagine in your deli order, you ask for honey mustard to be added to one of the two sandwiches you order. Before your order can be created, the staff member needs to make and retrieve honey mustard for the sandwich.
+Registry Write-Back
+
+The registry write-back stage is used if the execution of the instruction impacts data. This is another stage that isn’t always a part of the cycle.
+
+Let’s think back to our previous example:
+
+x = 5
+y = x + 3
+
+As each instruction is executed, we find ourselves needing to save this data. During the registry write-back stage, this new data is stored to one of the register’s in the CPU. The registry write-back stage is also necessary if existing data is changed or updated.
+
+As the deli’s 10,000th customer, they decide to name your order after you and put it on their “Deli Specials” board. They need to create space and allocate a part of the board’s “memory” to store your order.
+Conclusion
+
+Nice job reaching the end of the article. Let’s recap what we learned:
+
+    Instructions must go through the instruction cycle in order to be processed by the CPU
+    Although the cycle varies amongst CPUs, the stages of the instruction cycle are:
+
+    Fetch the instruction.
+    Decode the instruction.
+    Execute the instruction.
+    Memory access (if needed).
+    Registry write-back (if needed).
+
+Back (alt + , )
+Next (alt + . )
+
+
+
+
+Introduction to Instruction Pipelining
+1 min
+
+Computers are asked to complete countless instructions in a minuscule amount of time every day. If our computers could only complete one task at a time, using a computer would become incredibly time-consuming.
+
+Instruction pipelining is a technique that allows a single computer processer to break down and process multiple instructions at the same time.
+
+In this lesson, we will learn about:
+
+    How
+    Preview: Docs Loading link description
+    processor
+    hardware is designed to increase the throughput of sets of instructions.
+    Examples of types of steps used to process instructions.
+    Where pipelining lives between hardware and software.
+    The tradeoffs of pipelining
+
+
+
+
+Linear Laundry
+1 min
+
+If our computers could only complete a single task at a time, would it really cause that much of a slowdown?
+
+Imagine it’s laundry day. Let’s assume it takes the following times to complete each laundry task:
+
+    30 minutes: Washing machine cycle
+    40 minutes: Dryer
+    10 minutes: Fold and put away
+
+If we were to do each of these steps and waited for each step to be completed before starting the next, our total time would be 80 minutes (30 wash + 40 dry + 10 fold). If we started washing a single load of laundry at noon, we would be finished at 1:20 pm.
+
+An hour and twenty minutes doesn’t seem too bad, but what if we had to complete multiple loads of laundry without overlapping any tasks? If we had four loads of laundry, it would take us 320 minutes (80 *4) to complete. If we started this task at noon, we wouldn’t be finished with your wash until 5:20 pm. There went our entire afternoon.
+
+
+
+Instruction Pipelining
+Linear Instructions
+1 min
+
+Let’s look at this how this laundry example plays out in the digital world. In order for the
+Preview: Docs Central Processing Unit (CPU) is used to describe the electrical circuitry in a computer responsible for executing instruction sets derived from programs that have been converted into machine code. CPUs sit at the heart of the system of a computer and are connected to the motherboard. They also have caches which act as memory units capable of temporary storage and quick retrieval of files by the computer.
+CPU
+to execute an instruction, it will go through the instruction cycle which is comprised of the following steps:
+
+    Fetch Instruction
+    Decode Instruction
+    Execute
+    Memory Access
+    Registry Write Back
+
+The goal is that each step would take one cycle. This is not always the case because some instructions take longer and there are more steps than this in a modern CPU, 
+but one step per cycle is the ideal situation. If the system ran one instruction after another sequentially, each instruction would take five cycles to complete; 
+if we had four instructions to process (a crazy simple request for a CPU), it would take a total of 20 cycles.
+
+
+Pipelining in the Non-Digital World
+1 min
+
+Let’s head back to our slow laundry day.
+
+There’s an easier way to accomplish all this laundry by overlapping our cycles. For example, one load of clothes would be in the washer while another load is placed 
+in the dryer at the same time. If we wanted to maximize efficiency, we could fold clothes as they came out of the dryer and then put our next load in the washer so 
+that the washer and dryer would finish their next load at the same time.
+
+If we approached laundry this way, each load would still take 80 minutes, but the entire series would no longer take 320 minutes; instead, it would now take 200 minutes. 
+If we started at noon, laundry would finish up by 3:20pm, saving us two hours of time.
+
+Computers take this same concept we covered for optimizing laundry and apply it to the instructions they run in a process we call pipelining.
+
+In a more general sense, the overall concept of a system trying to process as many instructions as possible at the same time is known as instruction parallelism. 
+The specific strategy to accomplish that we are looking at here is pipelining.
+
+
+
+Things to Keep in Mind
+1 min
+
+There are a few things to keep in mind about pipelining.
+
+Pipelining is part of the hardware and can’t be turned off. All of the logic for how the
+Preview: Docs A processor is the electric circuitry found in computer hardware which is responsible for executing instruction sets derived from programs that have been converted into machine code.
+processor
+handles instructions in a pipeline is built into the hardware.
+
+Nothing is free, and this is true for processor pipelines as well. The increase in the complexity of the hardware comes at the cost of the processer running hotter and using more power. This also causes an increase in the cost to manufacture.
+
+The entire goal of pipelining is to get many instructions completed as quickly as possible. Pipelining does nothing to improve the speed of an individual instruction. The power of pipelining shows when there are many instructions that need processing.
+
+The theoretical improvement of a pipeline is proportional to the number of stages in the pipeline. In our overview of pipeline and laundry, we keep our number of steps to just a few for clarity; however, many CPUs have 7, 10, 20, or even more than 30 stages in their pipeline.
+
+Up to 30 stages? But I thought before we were told that there are five stages in the pipeline? The five stages we examined earlier in this lesson can be thought of as general groupings of stages of the pipeline. These stages can be broken down even further into more individual steps.
+
+
+
+Instruction Pipelining
+Conclusion
+<1 min
+
+Nice job reaching the end of this lesson! With an ever-increasing demand being put on computers, hardware designers are forced to come up with even better ways to process instructions. Pipelining is one of the key ways they do this.
+
+Let’s go over what we learned about:
+
+    Instruction pipelining is a technique that allows a single computer processer to break down and process multiple instructions at the same time.
+    The
+    Preview: Docs A processor is the electric circuitry found in computer hardware which is responsible for executing instruction sets derived from programs that have been converted into machine code.
+    processor
+    hardware is designed to increase the throughput of sets of instructions.
+    Processing an instruction can be broken down into five steps:
+    Fetch Instruction
+    Decode Instruction
+    Execute
+    Memory Access
+    Registry Write Back
+    Cost to manufacture and power needed increases as processor complexity increases.
+
+
+
+
+Skip to Content
+My Home
+Hazards of Instruction Pipelining
+
+Learn about the hazards of pipelining and how to remedy them.
+
+Even though pipelining instructions offer many benefits, it’s not a perfect system. Hazards or stalls in the pipeline can cause the pipeline to skip processing instructions in a cycle. Some situations can force all instructions in a pipeline to be discarded, known as flushing the pipeline. In this article, we will be learning about the types of hazards that come along with pipelining and strategies used to remediate them.
+
+There are three main hazard types we can come across with pipelining:
+
+    Structural Hazards
+    Data Hazards
+    Control Hazards
+
+
+
+
+
+Structural Hazards
+
+Structural hazards are a limitation of the hardware itself. There are some limitations such as not being able to fetch an instruction and decode it in the same stage. The memory access is another limitation. The information the CPU needs to process is in cache instead of RAM because of the speed difference, but not everything that is needed can fit on cache so there will be times where the cache needs to work with RAM, and this costs time. ALU (arithmetic logic units) can only process one instruction at a time, and some instructions can be more demanding than others, such as division.
+
+Poor hardware design, specifically poor design for the specific needs of the software being run on the hardware, can cause unnecessary structural hazards.
+
+
+
+
+Data Hazards
+
+A data hazard occurs when an instruction is dependent on another instruction still in the pipeline.
+
+For example, in order to process instruction_2 in the following code example, we must get the results from instruction_1 first:
+
+# instruction_2 relies on the result of instruction_1
+instruction_1 = x / y
+instruction_2 = instruction_1 + a
+
+
+
+
+
+Control Hazards
+
+if statements, loops, and branches; these are the things that make up control hazards because they cause situations where the system doesn’t know for certain which set 
+of instructions will need to be processed. Analysis shows that these occur anywhere between every 5th and 8th instruction in a pipeline, so these are a very common issue, 
+especially if the system takes the wrong branch and has to restart from the other path.
+
+The fundamental issue with control hazards is that the processor does not know if it needs to run the code inside the if/branch/loop statement until it processes the 
+conditional. If the processor guesses wrong on what way the conditional will go, it will have to flush the pipeline and take the branch or skip the instruction depending
+ on which way the processor guessed.
+
+An example of when there could be a control hazard might look something like this:
+
+def do_something(a, b):
+  x = a + b
+  y = a * b
+  if (x > y):
+    x = x + y
+  y = y + x
+  # ...
+
+The code x = x + y may or may not need to be processed depending on the outcome of the condition statement if (x > y):. Notice that the next line of code after the block, y = y + x is dependent on the information in the code block, but only if the code block is executed, creating a data hazard as well.
+Reducing Hazards in Pipeline
+
+There is no way to remove all risks from instructions that are processed by a system, all that can be done is try to either find ways to reduce them or limit their impact, not eliminate them. Each type of method is addressed in different ways.
+Multiple choice
+Questions
+
+True or False: there is no way to remove all hazards (Structural, Data, and Control) from a pipeline.
+Answer Choices
+👏
+Correct! Manufacturers can only reduce the risk/impact of these hazards.
+
+
+
+Data hazards
+
+Since data hazards occur when one instruction is dependent on another, there are a few ways that hardware designers can create the chips to try and limit these issues. 
+Pipelining is a hardware issue and not a software issue, but bad code will only make it harder for the hardware to deal with hazards.
+
+One method is to have the hardware setup to be able to pass results from one instruction to another within the pipeline, reducing the read/writebacks 
+to memory that are needed.
+
+Another tactic is for the system to reorder the sequence of the instructions. By doing this, the number of instructions in the pipeline that are dependent on 
+one another is reduced. This can get more complex as it would require the processor to read ahead of the instructions to know which are dependent on each other 
+and which can be processed out of sequence as they were created. If done correctly, this can allow for the pipeline to finish one instruction that has another dependent 
+on it before another enters the pipeline but still processing others at the same time.
+
+There is a set of seven instructions. The second and fourth instructions are moved to the end.
+
+The last major option is to create a bubble or stall in the pipeline. This involves holding the instructions until the information they need has been processed and then resuming the normal pipeline flow.
+Pipelining Bubble
+Multiple choice
+Questions
+
+What is one method manufacturers can use to remediate the risks of data hazards?
+Answer Choices
+👏
+Correct!
+
+
+
+
+
+Control Hazards
+
+For control hazards in which conditional code segments, loops, or branches can cause issues, processors can take a few approaches.
+
+Basic processors will do a long stall on the pipeline until the outcome of the branch is known. This is much like the bubble tactic sometimes used to handle data hazards. 
+In both cases, the system doesn’t know what it should do or what value to use so it simply waits until it has this information.
+
+Advanced processors use branch prediction where the compiler guesses based on past behavior which branch will be used and fills the pipeline assuming this path will 
+be taken. A downside to this method is that if their guess is wrong then they have to do a pipeline flush, forcing them to start over. Thankfully modern processors 
+are quite good at this, so if designed correctly, this method is actually quite useful. Think of it like taking an umbrella out if you live in a wet area 
+(Washington State, Scotland, etc); it might not be raining when the day starts, but the odds that you will need one before the day is over is high enough 
+that you are better off carrying one with you.
+
+Another way the compiler can deal with control hazards is to inline methods to avoid calls to the method.
+
+For loops, the system can unroll them to not have to loop through but instead run them as a linear list of instructions as this is faster than memory jumps.
+
+
+
+
+
+
+
+Structural Hazards
+
+Structural hazards mitigation is anything that could be learned about the usage of processors and instructions and how they can be improved to improve this functionality. Better design of cache to reduce calls to RAM is a great example.
+Conclusion
+
+Nice job reaching the end of this article. Let’s review what we learned about pipelining hazards.
+
+    Structural hazards are a limitation of the hardware itself.
+        A remedy for this is improved design; however, there is a tradeoff between cost, heat, and energy consumption.
+    Data hazards occur when an instruction is dependent on another instruction still in the pipeline. Remedies include:
+        Having the hardware pass one result to another while still in the pipeline.
+        Reordering the sequence of instructions to limit instructions that are dependent on each other being in the pipeline at the same time.
+        Stalling the processing of instructions until ones that are dependent on are complete.
+    Control hazards occur when the system doesn’t know which set of instructions will need to be processed. Remedies include:
+        Stalling the pipeline until the outcome is known on which branch to take.
+        Guessing the path that will be taken and process the instructions accordingly.
+        Inlining simple methods.
+
+Back (alt + , )
+Next (alt + . )
+
+
+
+
+
+Skip to Content
+My Home
+Superscalar Architecture
+
+Learn about superscalar processors and how they are used to improve the processing of instructions.
+Introduction
+
+Now that we have looked at pipelining, let us consider another parallelism strategy where processes are carried out simultaneously: superscalar. In this article we will cover:
+
+    What is a superscalar processor
+    How it is different from pipelining
+    How it is different from multicore processors
+    Hazards that come with superscalar
+    Limitations of the process
+
+What is superscalar?
+
+Processors that take advantage of superscalar architecture are designed to use a methodology of parallelism where instructions are sent to different execution units at the same time, allowing for more than one instruction to be processed in a single clock cycle. In a superscalar processor, each execution unit (such as an ALU) is within a single CPU. The dispatcher reads instructions from memory to find the ones that can be run in parallel, sending them to their own path if possible.
+
+By spreading the instructions across several instruction sets, it can allow for specialization such as an ALU for integer math and another for floating-point math. This can allow the dispatcher (controls where instructions are sent to be processed) to send different instructions to different ALUs for not only superscalar speed improvements of divide and conquer but also improved processing speed from specialized components.
+
+Because the instruction sets are run on the same CPU it does allow for sharing of resources such as registers allowing for results of one instruction to be shared with another quicker.
+
+“Except for CPUs used in low-power applications, embedded systems, and battery-powered devices, essentially all general-purpose CPUs developed since about 1998 are superscalar.” Wikipedia
+Superscalar vs. Pipelining
+
+This sounds an awful lot like pipelining, doesn’t it? They are similar in that they are both using the concept of parallelism; however, they are implemented in different ways. Pipelining staggers instructions to run through the same set of execution units so that each part is used by a different instruction at the same time:
+
+This contrasts with superscalar processing where instructions are spread across different execution units so that two instructions can both be in the same stage at the same time.
+
+Pipelining has multiple instructions simultaneously in different stages of the process. Superscalar has multiple instructions at the same stage on different execution units at the same time.
+
+You might be asking if they can be combined to use both superscalar and pipeline, and yes, yes they can. In fact, most of the time you will find them working in concert together. Instructions would be divided among different sets of execution units (superscalar). Then each path would be staggered to allow each step to be utilized in each cycle (pipelining). In fact, this is typically how a superscalar CPU is set up; they are built to use both superscalar and pipeline strategies.
+
+pipeline combined with superscalar processing instructions
+Superscalar vs Multiprocessor Units
+
+Superscalar processors are not the same thing as multi-core processors (a processor on a single chip with two or more separate processing units) because separate execution units are not the same thing as entire processors. A superscalar can have multiple versions of the same execution unit, such as integer shifter, float point arithmetic, allowing for instructions to be parsed across the different parts inside the same processor. In a multi-core processor, it can process instructions in separate processors.
+
+instructions in superscalar and another in multicore
+
+Just like how a chip can combine pipelining and superscalar, a chip can also use superscalar (or not) on each of its cores in a multicore chip.
+Hazards
+
+Much like pipelining, there are hazards that come with parallelizing instructions using superscalar.
+Structural Hazards
+
+For instance, there are structural hazards, such as the delegation of instructions to the different execution units must be done correctly or pipeline stalls may occur when one instruction set is dependent on another. Poor assignments of instructions to execution units can also lead to some units going unused during a cycle, leading to less than optimum efficiency.
+
+Instructions have to come out of the CPU in the right order even if they were ordered to be processed, this is because some instructions can take longer to process than others, such as float point arithmetic vs integer arithmetic.
+
+Another structural hazard can occur with registry conflicts when two different instructions both need exclusive access to the same registry.
+
+
+
+
+Control Hazards
+
+Control hazards are when a set of instructions is complicated by if statements, loops, and branches. These cause the processor to be unsure if the instructions will all need to be processed or if some can be skipped.
+
+If there is a branch, the processor can execute both branches and throw away whichever is wrong; this is known as speculative execution. This can be combined with branch prediction to try and increase accuracy even more.
+Data Hazards
+
+Superscaling makes data hazards even more complex than just pipelining. This is because instructions are in the same stage of the instruction process as others; if there are any dependencies, the instructions could be processed out of order.
+
+For example, in order to process instruction_2 in the following code example, we must get the results from instruction_1 first:
+
+# instruction_2 relies on the result of instruction_1
+instruction_1 = x / 2
+instruction_2 = instruction_1 + 3
+
+This example is very similar to the one we had for pipelining. The difference here is that because both instructions can run at the same time on different ALUs, instruction_2 could potentially finish processing before instruction_1 if the processer didn’t properly detect the instructions as data-dependent. instruction_2 could process faster because division is more intensive to execute than addition.
+Multiple choice
+Questions
+
+In instruction parallelism, what are the three types of hazards?
+Answer Choices
+Limitations
+
+Superscaling has several limitations which curb the number of possible simulation processes. These limitations include:
+
+    The level of parallelism in the instruction set it is working with. How dependent the instructions are on each other? How many loops are in the set?
+    The cost of dependency checking. How much overhead is needed to go through the instruction set to look for dependencies?
+    The branch instruction checking. What is the cost of examining each of the branches?
+
+As processors become more and more advanced the number of ALUs can improve, but this would simultaneously increase the burden on the dependency checking and registry circuitry. “Collectively the power consumption, complexity, and gate delay costs limit the achievable superscalar speedup to roughly eight simultaneously dispatched instructions.” - Wikipedia
+Multiple choice
+Questions
+
+True or False: There is no theoretical cap to the number of instructions that can be paralleled with superscalar methodology.
+Answer Choices
+Review
+
+In this article we covered:
+
+    Superscalar is a technique that splits instructions across multiple execution units.
+    Superscalar is different than pipelining because pipelining runs instructions to try and fill every step in the process in each cycle, superscalar uses multiple execution units to increase throughput.
+    Superscalar is different from multicore processors because superscalar has multiple ALUs where multicore has multiple entire processors.
+    Hazards that come with superscalar include data hazards, control hazards, and structural hazards.
+    Due to the increased complexity of superscalar there are practical limits to its efficiency.
+
+Back (alt + , )
+Next (alt + . )
+
+
+
+
+
+Skip to Content
+My Home
+Instruction Parallelism Problem Set
+
+Challenge your understanding of instruction parallelism with these free-response questions.
+
+Congratulations on making it this far through the instruction parallelism module! Your next task is to complete this problem set designed to further test your understanding of instruction parallelism.
+Part 1
+
+For this set of questions we are going to ask about the following set of instructions:
+
+def do_something(a, b):
+  x = a + b   # Line 01
+  y = a * b   # Line 02
+  z = x / y   # Line 03
+  if (x > y): # Line 04
+    x = x + 3 # Line 05
+  y = y + 2   # Line 06
+
+Problem 1
+Free response
+
+    What type of hazard exists in lines 01-03?
+    What might the processor do to try and maintain parallelism?
+
+Your response
+
+data hazard reordering instruction sequence
+Our answer
+
+    A data hazard exists in these lines because line 03 depends on the outcome of lines 01 and 02.
+
+    The processor might move line 03 down further in the code to ensure lines 01 and 02 fully process before 03 is processed. Since no other line is dependent on 03 it would be safe to move it further down the instruction set.
+
+Free response
+
+    What type of hazard exist in lines 04-06?
+    What might the processor do to try and maintain parallelism?
+
+Your response
+
+control hazard long stall or branch prediction
+Our answer
+
+    This is a control hazard. The instruction on line 05, x = x + y, may or may not need to be processed depending on the outcome of the condition statement on line 04, if (x > y):.
+    The processor will predict if the branch will be needed or not. If it believes it will be, the processor will run the branch. If the processor’s guess is wrong, it will need to do a flush and restart from the last valid state.
+
+Part 2
+
+For this next set of questions, imagine you work for a chip manufacturer. Plans are being worked on for the next generation of chips and the team wants to hear your thoughts about parallelism for the chip design.
+Problem 1
+Free response
+
+What techniques would you encourage the company to use to ensure the chips would be designed for parallel processing?
+
+Your response
+
+ensure a tradeoff between the number of execution units and the max advantage you can get before the cost becomes too much
+Our answer
+
+To ensure parallel processing, the chips should be designed to utilize pipelining and/or superscalar methodology. By using these methods, the chips would be able to process more than one instruction at a time. Combining the two strategies would be even more powerful.
+Problem 2
+Free response
+
+What hazards should you keep in mind when making your design?
+
+Your response
+
+structural hazards
+Our answer
+
+    Control: The design has to be prepared for if statements, loops, and branches because they cause situations where the system doesn’t know for certain which set of instructions will need to be processed. You could try to convince your team to keep these in mind by that these occur anywhere between every 5th and 8th instruction in a pipeline, so these are a very common issue, especially if the system takes the wrong branch and has to restart from the other path. A good branch prediction system here would go a long way to reduce the risk.
+
+    Structural: These are a limitation of the hardware itself. Since you will never be able to remove all hazards the goal is to design the chip to meet the needs of where the chip will be used.
+
+    Data: These occur when an instruction is dependent on another instruction still in the pipeline. Having the proper setup to detect these is critical for good parallelism, along with the methods to handle it.
+
+Problem 3
+Free response
+
+In regards to instruction-level parallelism, what would the limitations of any design you come up with be?
+
+Your response
+
+Control , structural and data hazards
+Our answer
+
+The following limits the number of possible simulation processes to roughly eight:
+
+    The limitations of any hardware, space, cost, power use, etc.
+    Dependency checking
+    Branch instruction checking
+    Gate delays
+
+Back (alt + , )
+Next (alt + . )
+
+

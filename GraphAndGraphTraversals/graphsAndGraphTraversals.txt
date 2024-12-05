@@ -1,0 +1,37 @@
+Introduction: Graphs and Graph Traversal
+
+See what’s covered in Graphs and Graph Traversal.
+
+The goal of this unit is to begin to learn how to write create graphs and traverse them in Python.
+
+After this unit, you will be able to:
+
+    Create and use your own Graph and Vertex classes, and perform depth-first search using recursion and breadth-first search using a queue on those classes in Python.
+    Implement your own Dijkstra’s graph search algorithm.
+    Implement your own A* graph search algorithm in Python using both Euclidean and Manhattan heuristics.
+
+You will eventually put all of this knowledge into practice with an upcoming Portfolio Project. You can complete the Portfolio Project either in 
+parallel with or after taking the prerequisite content—it’s up to you!
+
+Learning is social. Whatever you’re working on, be sure to connect with the Codecademy community in the forums. Remember to check in with the 
+community regularly, including for things like asking for code reviews on your project work and providing code reviews to others in the projects 
+category, which can help to reinforce what you’ve learned.
+
+
+
+
+Graphs: Conceptual
+Introduction to Graphs
+1 min
+
+Graphs are the perfect data structure for modeling networks, which make them an indispensable piece of your data structure toolkit. 
+They’re composed of nodes, or vertices, which hold data, and edges, which are a connection between two vertices. A single node is a vertex.
+
+Consider a map of the area where you live. As a graph, we could model bus stops as vertices, with bus routes between stops functioning as the edges.
+
+What about the internet? Web pages can be vertices, and the hyperlinks which connect them are edges.
+
+Real-world relationships modeled as
+Preview: Docs Graphs are a way of modeling systems based on a node and edge structure for representing the relationships between items.
+graphs
+are numerous, making them an essential concept to master.

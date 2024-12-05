@@ -1,0 +1,202 @@
+Introduction: Voltage & Bits
+1 min
+
+Computers are capable of dizzying feats, but they’re built from humble origins. At the lowest level, computers run on electric currents 
+limited to two states: power or no power.
+
+There are many ways to represent the two states:
+
+    “I have current!” vs. “I don’t have current!”
+    “on” vs. “off”
+    + vs. -
+    True vs. False
+    1 vs. 0
+
+We’ll use 1 and 0 for the remainder of the lesson. This piece of information (power or no power) localized to a single location is called a bit.
+
+    Bit with power: 1
+    Bit without power: 0
+
+Logic gates receive one or more inputs of current and alter the power according to their rules.
+
+Some logic gates will only output power if 
+
+
+Truth Tables
+3 min
+
+Logic gates have certain rules that determine what the outputs are with respect to the inputs a and b. When we are analyzing a logic gate, 
+we can visualize all of the possible outputs by making a truth table. A truth table shows the output for all possible inputs.
+
+For example, if we have a gate that returns 1 if and only if both the inputs a and b are 1, we can create the truth table:
+a 	b 	output
+0 	0 	0
+0 	1 	0
+1 	0 	0
+1 	1 	1
+
+Each row represents an observation of output depending on the values of a and b. So the first row shows that when a is 0 and b is 0, 
+the output will be 0.
+
+When we make a truth table, we want to represent the entire universe of possibilities. This means that we want every combination of inputs 
+to be represented. For 2 variables (a and b), we will need 4 rows to represent all of these combinations.
+
+In Python, and many other programming languages, 1 evaluates to be True, and 0 evaluates to be false.
+
+
+
+Learn: Logic Gates
+NAND Gate
+2 min
+
+Our first gate is the NAND gate. This gate receives two inputs and returns current as long as at least one of the inputs is off.
+
+Here’s the truth table:
+a 	b 	output
+0 	0 	1
+0 	1 	1
+1 	0 	1
+1 	1 	0
+
+
+from nand import NAND_gate
+
+
+
+NOT Gate
+3 min
+
+Now that we’ve completed our NAND_gate(), we can use that function to build other gates.
+
+This time you’re starting from scratch, so lean on that truth table. Fortunately, our next gate, NOT only has one input.
+
+Here’s the truth table:
+a 	output
+0 	1
+1 	0
+
+
+
+AND Gate
+2 min
+
+Our next gate is the AND gate. This gate receives two inputs and only returns current if the inputs are both on.
+
+As in previous exercises, you’ll only be able to use gates you’ve previously built: NAND_gate(), and NOT_gate().
+
+Here’s the truth table:
+a 	b 	output
+0 	0 	0
+0 	1 	0
+1 	0 	0
+1 	1 	1
+
+
+
+
+
+from nand import NAND_gate
+from not_gate import NOT_gate
+
+
+def AND_gate(a, b):
+  return NOT_gate(NAND_gate(a, b))
+
+
+
+
+
+# TEST CASES
+
+print("A: 0, B: 0 | Output: {0}".format(AND_gate(0, 0)))
+print("A: 0, B: 1 | Output: {0}".format(AND_gate(0, 1)))
+print("A: 1, B: 0 | Output: {0}".format(AND_gate(1, 0)))
+print("A: 1, B: 1 | Output: {0}".format(AND_gate(1, 1)))
+
+
+OR Gate
+3 min
+
+The next gate we are going to build is the OR gate. This gate receives two inputs and returns 1 if either one of the inputs is 1.
+
+To build your OR_gate(), you should use any combination of the gates you’ve already made: NAND_gate(), NOT_gate(), and AND_gate().
+
+Here’s the truth table:
+a 	b 	output
+0 	0 	0
+0 	1 	1
+1 	0 	1
+1 	1 	1
+
+
+from nand import NAND_gate
+from not_gate import NOT_gate
+from and_gate import AND_gate
+
+def OR_gate(a, b):
+  return NAND_gate(NAND_gate(a, a), NAND_gate(b,b))
+
+
+
+XOR Gate
+3 min
+
+Now, we are going to create what’s called an XOR gate, an exclusive or gate. This gate receives two inputs, a and b, and only returns a 1 if one of the inputs is 1, 
+but not if both of the inputs are 1.
+
+To build your XOR_gate(), you should use any combination of the gates you’ve already made: NAND_gate(), NOT_gate(), AND_gate(), and OR_gate().
+
+Here’s the truth table:
+a 	b 	output
+0 	0 	0
+0 	1 	1
+1 	0 	1
+1 	1 	0
+
+
+XOR_gate() returns 1 if either a or b is 1, but not if they’re both 1.
+
+Push yourself to use the previous gates in creating your XOR_gate()!
+
+One way to do this would be:
+
+AND(NAND(a, b), OR(a, b))
+
+Can you see why?
+
+
+
+earn: Logic Gates
+Logic Gate Review - Part II
+1 min
+
+Good job! You’ve started with little bits, and you’ve built out an entire toolkit of logic gates you now can use to perform more complicated operations. 
+You’re well on your way to creating an entire operating system. Watch out, Unix!
+
+We’ve covered:
+
+    Bits and current
+    Truth tables
+    NAND gates
+    NOT gates
+    OR gates
+    XOR gates
+
+You’ve done a great job of creating these gates from scratch in Python! All of the basic gates exist already as bitwise operators in Python. Now that 
+you’ve done the hard work to understand how each works, you can save time by using these built-in operators:
+
+#NOT: 
+~ x
+#E.g. ~1 == 0 and ~0 == 1
+
+#AND:
+x & y
+#E.g. 1&1 == 1 and 1&0 == 0
+
+#OR:
+x | y
+#E.g. 1|1 == 1 and 0|0 == 0
+
+#XOR:
+x ^ y
+#E.g. 1^1 == 0 and 1^0 == 1
