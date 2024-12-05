@@ -1,5 +1,6 @@
-# Python Data Structures and Algorithms Welcome to the Python Data Structures and Algorithms repository! This repository contains implementations and explanations of various data structures and algorithms in Python. 
-## Table of Contents 
+# Python Data Structures and Algorithms 
+##This repository contains implementations and explanations of various data structures and algorithms in Python. 
+### Table of Contents 
 1. [Data Structures](#data-structures) 
 - [Node](#node) 
 - [Linked Lists](#linked-lists) 
